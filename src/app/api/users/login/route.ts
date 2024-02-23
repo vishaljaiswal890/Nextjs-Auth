@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid password" }, { status: 400 });
     }
 
-
     //create token data
     const tokenData = {
       id: user._id,
@@ -36,7 +35,7 @@ export async function POST(request: NextRequest) {
     };
 
     //generate jwt
-    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {
+    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
       expiresIn: "1d",
     });
 
@@ -44,7 +43,7 @@ export async function POST(request: NextRequest) {
       message: "Login Succesfull",
       success: true,
     });
-    
+
     response.cookies.set("token", token, { httpOnly: true });
     return response;
   } catch (error: any) {
